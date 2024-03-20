@@ -5,11 +5,30 @@ const MeuBotao = (props: any) => {
 }
 
 const Usuario = (props:any) => {
-  return <h1>{props.nome}</h1>
+  return (<h3>{props.nome}</h3>);
+}
+
+const ListaDeTarefas = (props: any) => {
+  return (
+    <>
+      <h4>Tarefas como lista de objetos</h4>
+      <ul>
+        {
+          props.dados.map((item: any) => {
+            return <ItemTarefa key={item.id} titulo={item.titulo} />
+          })
+        }
+      </ul>
+    </>
+  );
+}
+
+const ItemTarefa = (props: any) => {
+  return (<li>{props.titulo}</li>);
 }
 
 const App = () => {
-  const usuario = {nome: "minora"}
+  const usuario = {nome: "minora"};
   const tarefas = [
     'brails',
     'rabisl'
@@ -27,35 +46,27 @@ const App = () => {
     }
   ];
     return (
-      <style>
-        {estilo}
-      <style/>
       <div className="aplicacao">
-        <h1>The color brothers - 
-          {
-            nome = "minora";
-            nome
-          }
-        </h1>
+        <h1>The color brothers - {usuario.nome}</h1>
 
         {
-          usuario ? (<Usuario nome={Usuario.nome} />) :
+          usuario ? 
+          (<Usuario nome={usuario.nome} />) :
           (<MeuBotao titulo="login"/>)
         }
         {
           !usuario && (<MeuBotao titulo="signin"/>)
         }
 
-        <MeuBotao titulo="I'm saturation"/>
-        <MeuBotao titulo="I'm hue"/>
-        <MeuBotao titulo="I'm brightness"/>
-        {
-          tarefas.map(
-            (item, indice) => {
-               return (<li key={indice} >{item}</li>)
-              }
-          )
-        }
+        <h4>Tarefas como lista de string</h4>
+        <ul>
+          {
+            tarefas.map((item, indice) => {
+              return (<li key={indice}>{item}</li>)
+            })
+          }
+        </ul>
+        <ListaDeTarefas dados={tarefasMundoReal}/>
       </div>
     );
   }
