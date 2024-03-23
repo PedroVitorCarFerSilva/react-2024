@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 
 const MeuBotao = (props: any) => {
@@ -28,12 +29,8 @@ const ItemTarefa = (props: any) => {
 }
 
 const App = () => {
-  const usuario = {nome: "minora"};
-  const tarefas = [
-    'brails',
-    'rabisl'
-  ];
-  const tarefasMundoReal =[
+  const usuario = {nome: "infoweb"};
+  const [tarefas, setTarefas] = useState([
     {
       id:1,
       titulo : "brasil",
@@ -44,10 +41,30 @@ const App = () => {
       titulo : "GAA",
       concluido : true,
     }
-  ];
+  ]);
+  const [tarefa, setTarefa] = useState("");
+
+  const listenClicarBotao = () => {
+    console.log("clicou!");
+    console.info(tarefa);
+    const objeto = {
+      id: tarefas.length + 1,
+      titulo: tarefa,
+      concluido: false,
+    }
+    console.info(objeto)
+    setTarefas([
+      ...tarefas,
+      objeto
+    ]);
+    setTarefa("");
+  }
+  const listenModificarTexto = (evento: any) => {
+    setTarefa(evento.target.value);
+  }
     return (
       <div className="aplicacao">
-        <h1>The color brothers - {usuario.nome}</h1>
+        <h1>Receba? {usuario && (["- ", usuario.nome])}</h1>
 
         {
           usuario ? 
@@ -58,7 +75,14 @@ const App = () => {
           !usuario && (<MeuBotao titulo="signin"/>)
         }
 
-        <h4>Tarefas como lista de string</h4>
+        <div>
+          <label htmlFor="tarefa">escreva o nome da tarefa: </label>
+          <input placeholder="digite uma tarefa" type="text" value={tarefa} onChange={listenModificarTexto} />
+          <button onClick={listenClicarBotao}>Enviar</button>
+        </div>
+        <ListaDeTarefas dados={tarefas} />
+
+        {/*<h4>Tarefas como lista de string</h4>
         <ul>
           {
             tarefas.map((item, indice) => {
@@ -66,8 +90,8 @@ const App = () => {
             })
           }
         </ul>
-        <ListaDeTarefas dados={tarefasMundoReal}/>
-      </div>
+        <ListaDeTarefas dados={tarefasMundoReal}/>*/}
+        </div>
     );
   }
   
